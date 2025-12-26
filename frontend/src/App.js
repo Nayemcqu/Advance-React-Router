@@ -61,4 +61,14 @@ element:<EditEventPage/>,
 
 ]);
 
-  return <RouterProv
+  return <RouterProvider router={router}>
+ <div>
+
+
+ </div>
+  </RouterProvider>
+  
+ 
+}
+
+export default App;

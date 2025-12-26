@@ -6,6 +6,15 @@ function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <NavLink to="/" className={({isActive})=>isActive ? classes.isActive :undefined}>Home</NavLink>
+            <NavLink to="/" className={({isActive})=>isActive ? classes.isActive :undefined} end>Home</NavLink>
           </li>
-          
+          <li>
+            <NavLink to="events"  className={({isActive})=>isActive ? classes.isActive :undefined} >Events</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default MainNavigation;
