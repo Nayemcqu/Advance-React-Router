@@ -1,32 +1,39 @@
-import { Link } from "react-router-dom";
+import { useLoaderData,data, Await } from 'react-router-dom';
+import EventsList from '../components/EventsList';
+import { Suspense } from 'react';
 
-const Dummy_Events=[
-{
-id:'e1',
-title:'some event'
-},
-{
-id:'e2',
-title:'another event'
-}
-]
-
-function EventsPage(){
-
-return <>
-<h1>EventsPage</h1>;
-<ul>
-    {Dummy_Events.map((event)=><li key={id}>
-
-<Link>{event.title}</Link>
-    </li>)}
-
-</ul>
+function EventsPage() {
+  const {events}=useLoaderData();
 
 
-   </>
-    
-
-}
+  return( 
+ <Suspense fallback={<p>Loading...</p>}>
+ <Await resolve={events}>
+    {(loadEvents)=><EventsList events={loadEvents}/>}
+  </Await>
+  </Suspense>
+)}
 
 export default EventsPage;
+
+async function loadEvents(){
+
+    const response = await fetch('http://localhost:8080/events')
+      if (!response.ok) {
+   // return {isError:true, message:'could not fetch data'};
+throw new Response(JSON.stringify({message:'could not fetch events'}),{status:500,})
+} else {
+      const resData = await response.json();
+    // Your backend returns { events: [...] }, so return just the array
+    return resData.events;  
+      ;
+      }
+
+}
+
+export  function loader(){
+return data({
+    events:loadEvents()
+})
+
+};
